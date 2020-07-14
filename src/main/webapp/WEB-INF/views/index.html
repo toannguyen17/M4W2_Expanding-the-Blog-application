@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title th:text="${title != null ? title : 'Blog - CodeGym'}"></title>
+    <style>
+        html, body {
+			padding: 0;
+            margin:  0;
+            background: #f6f6f6;
+        }
+
+        .mt_10 {
+	        margin-top: 10px !important;
+        }
+
+        .mt_20 {
+	        margin-top: 20px !important;
+        }
+
+        a {
+	        color: #424242;
+	        text-decoration: none;
+        }
+
+        .regBox {
+            margin: 0 auto;
+	        max-width: 900px;
+        }
+
+        .phdr {
+	        color: #fff;
+	        background: #4c5b61;
+	        font-size: 1.1rem;
+	        padding: 12px;
+        }
+        .phdr a {
+	        color: #fff;
+        }
+
+	    .list {
+		    padding: 10px;
+		    background: #fff;
+
+	    }
+
+	    .card {
+		    margin: 10px;
+		    box-shadow: 0 4px 7px 0px rgba(0, 0, 0, 0.12941176470588237), 0 4px 7px 0px rgba(0, 0, 0, 0.12941176470588237);
+	    }
+
+        .button {
+	        line-height: 40px;
+	        padding: 10px 20px;
+	        background: #fff;
+	        box-shadow: 0px 1px 5px -1px rgba(0, 0, 0, 0.1), 0px 1px 10px 0px rgba(0, 0, 0, 0.1);
+	        border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+<div class="regBox mt_10">
+    <center>
+        <h2>BLOG</h2>
+    </center>
+</div>
+<div class="regBox mt_10">
+	<center>
+		<a class="button" href="add" th:href="@{'add'}">Add</a> -
+		<a class="button" href="categories" th:href="@{'categories'}">Category</a>
+	</center>
+	<div class="mt_10"></div>
+	<form>
+		<table>
+			<tbody>
+			<tr>
+				<td>Tên bài viết:</td>
+				<td><input type="text" name="q" /></td>
+			</tr>
+			<tr>
+				<td>Danh mục:</td>
+				<td>
+					<select name="c">
+						<option value="0">All</option>
+						<option th:each="category : ${categorys}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="Search" /></td>
+			</tr>
+			</tbody>
+		</table>
+	</form>
+	<div class="mt_10"></div>
+	<div class="mt_20 card" th:each="post:${list}">
+		<div class="phdr">
+			<a th:href="@{'post/' + ${post.getId()}}">
+				<th:block th:text="${post.getName()}"></th:block>
+			</a>
+		</div>
+		<div class="list" th:text="${post.getContent()}"></div>
+		<div class="list" th:if="${post.getCategory() != null}"><strong>Catrgory: <th:block th:text="${post.getCategory().getName()}"></th:block></strong></div>
+	</div>
+</div>
+<div class="regBox mt_10">
+	<a th:href="@{'/'(s=${s}, c=${c}, page=${list.number - 1})}" th:if="${list.hasPrevious()}">Previous</a>
+	<span th:text="${list.number + 1}"></span>/<span th:text="${list.totalPages}"></span>
+	<a th:href="@{'/'(s=${s}, c=${c}, page=${list.number + 1})}" th:if="${list.hasNext()}">Next</a>
+</div>
+</body>
+</html>

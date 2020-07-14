@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Category</title>
+</head>
+<body>
+<center>
+<h2>Category</h2>
+	<a href="/categories/create">Create new category</a>
+	<br />
+	<br />
+	<table border="1">
+		<tbody>
+		<tr th:each="category:${list}">
+			<td>Name:</td>
+			<td>
+				<a href="" th:href="@{'/categories/edit/'+${category.getId()}}" th:text="${category.getName()}"></a>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+	<br />
+	<br />
+	<div>
+		<a th:href="@{'/'(page=${list.number - 1})}" th:if="${list.hasPrevious()}">Previous</a>
+		<span th:text="${list.number + 1}"></span>/<span th:text="${list.totalPages}"></span>
+		<a th:href="@{'/'(page=${list.number + 1})}" th:if="${list.hasNext()}">Next</a>
+	</div>
+</center>
+</body>
+</html>

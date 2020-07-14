@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="index::head">
+	<meta charset="UTF-8">
+	<title>Add Category</title>
+</head>
+<body>
+<div class="regBox mt_10">
+	<center>
+		<a href="/" th:href="@{'/'}"><h2>BLOG</h2></a>
+	</center>
+</div>
+<center>
+	<h2>Add Category</h2>
+	<div th:if="${success != null}">
+		<span th:text="${success}"></span>
+	</div>
+	<form method="post">
+		<table>
+			<tr>
+				<td>Name:</td>
+				<td><input type="text" name="name" /></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="Add" /></td>
+			</tr>
+		</table>
+	</form>
+	<br />
+	<br />
+	<a href="/categories">Back to Category</a>
+</center>
+</body>
+</html>
